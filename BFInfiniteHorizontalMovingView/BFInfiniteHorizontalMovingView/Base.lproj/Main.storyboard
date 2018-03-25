@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="BFInfiniteHorizontalMovingView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Nc-NO-jbH" customClass="BFInfiniteHorizontalMovingView" customModule="BFInfiniteHorizontalMovingView" customModuleProvider="target">
+                                <rect key="frame" x="16" y="314" width="343" height="39"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="39" id="quT-ih-M2N"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="backgroundPatternImage" value="1.jpg"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gPG-Ah-pzM">
+                                <rect key="frame" x="164" y="379" width="49" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="atp-LQ-zPv"/>
+                                    <constraint firstAttribute="width" constant="47" id="qSt-SD-qpQ"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="switchChaged:" destination="BYZ-38-t0r" eventType="valueChanged" id="waa-dU-Vq3"/>
+                                </connections>
+                            </switch>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hsj-3n-mn3">
+                                <rect key="frame" x="16" y="248" width="343" height="36"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="blB-7H-2n4"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="8Nc-NO-jbH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CW7-fk-CkF"/>
+                            <constraint firstItem="Hsj-3n-mn3" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="H44-CG-jVG"/>
+                            <constraint firstItem="8Nc-NO-jbH" firstAttribute="top" secondItem="Hsj-3n-mn3" secondAttribute="bottom" constant="30" id="WoO-UJ-was"/>
+                            <constraint firstItem="8Nc-NO-jbH" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Ww3-KR-5E2"/>
+                            <constraint firstItem="8Nc-NO-jbH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="XZi-Sx-edR"/>
+                            <constraint firstItem="gPG-Ah-pzM" firstAttribute="top" secondItem="8Nc-NO-jbH" secondAttribute="bottom" constant="26" id="bhO-2q-s3A"/>
+                            <constraint firstItem="Hsj-3n-mn3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="fqH-je-6Pr"/>
+                            <constraint firstItem="gPG-Ah-pzM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gyt-sd-zC2"/>
+                            <constraint firstItem="8Nc-NO-jbH" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="vKh-fe-3vI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="bar" destination="8Nc-NO-jbH" id="6Sk-Ng-fvk"/>
+                        <outlet property="containerView" destination="Hsj-3n-mn3" id="eiY-58-KKH"/>
+                        <outlet property="switcher" destination="gPG-Ah-pzM" id="VH9-V2-ZZJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="1.jpg" width="550" height="294"/>
+    </resources>
+</document>
