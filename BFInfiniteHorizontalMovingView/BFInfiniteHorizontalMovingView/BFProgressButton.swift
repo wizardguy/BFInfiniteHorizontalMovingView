@@ -14,6 +14,11 @@ enum BFProgressState {
     case stopped
 }
 
+enum BFProgressDirection {
+    case left
+    case right
+}
+
 
 @IBDesignable
 class BFProgressButton: UIButton {
@@ -39,6 +44,7 @@ class BFProgressButton: UIButton {
             return _progressState
         }
     }
+    public var direction: BFProgressDirection = .right
     
     fileprivate var _progressState: BFProgressState = .stopped
     fileprivate var backgroundImageView1: UIView!
@@ -62,7 +68,12 @@ class BFProgressButton: UIButton {
     
     fileprivate func adjustSubViewsPosition() {
         backgroundImageView1.frame = self.bounds
-        backgroundImageView2.frame = CGRect(x:self.bounds.size.width, y: 0, width: self.bounds.size.width, height: self.bounds.height)
+        if direction == .left {
+            backgroundImageView2.frame = CGRect(x:self.bounds.size.width, y: 0, width: self.bounds.size.width, height: self.bounds.height)
+        }
+        else {
+            backgroundImageView2.frame = CGRect(x:-self.bounds.size.width, y: 0, width: self.bounds.size.width, height: self.bounds.height)
+        }
     }
     
     fileprivate func showMovingViews(_ show:Bool) {
@@ -101,8 +112,14 @@ extension BFProgressButton {
         let animationOptions = UIViewAnimationOptions.repeat.rawValue | UIViewAnimationOptions.curveLinear.rawValue
         // Animate background
         UIView.animate(withDuration: movingSpeed, delay: 0.0, options: UIViewAnimationOptions(rawValue: animationOptions), animations: {
-            self.backgroundImageView1.frame = self.backgroundImageView1.frame.offsetBy(dx: -1 * self.backgroundImageView1.frame.size.width, dy: 0)
-            self.backgroundImageView2.frame = self.backgroundImageView2.frame.offsetBy(dx: -1 * self.backgroundImageView2.frame.size.width, dy: 0)
+            if self.direction == .left {
+                self.backgroundImageView1.frame = self.backgroundImageView1.frame.offsetBy(dx: -self.backgroundImageView1.frame.size.width, dy: 0)
+                self.backgroundImageView2.frame = self.backgroundImageView2.frame.offsetBy(dx: -self.backgroundImageView2.frame.size.width, dy: 0)
+            }
+            else {
+                self.backgroundImageView1.frame = self.backgroundImageView1.frame.offsetBy(dx: self.backgroundImageView1.frame.size.width, dy: 0)
+                self.backgroundImageView2.frame = self.backgroundImageView2.frame.offsetBy(dx: self.backgroundImageView2.frame.size.width, dy: 0)
+            }
         })
     }
     
