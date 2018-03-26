@@ -34,3 +34,13 @@ aView.stopMoving()
 5) Build and Run!
 
 Check out the demo project for more details.
+
+#### BFInfiniteHorizontalMovingViewDelegate
+
+A built-in view tap gesture delegate.
+
+```swift
+let aView = BFInfiniteHorizontalMovingView.newInstance(...)
+aView.delegate = self
+```
+Note, the view's background color will be changed to hihglight by default when you tap on it.
