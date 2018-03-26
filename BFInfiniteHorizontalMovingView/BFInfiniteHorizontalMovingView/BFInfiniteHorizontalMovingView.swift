@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+@objc
+protocol BFInfiniteHorizontalMovingViewDelegate {
+    @objc optional func didTapped(view: BFInfiniteHorizontalMovingView)
+}
+
 
 @IBDesignable
 class BFInfiniteHorizontalMovingView: UIView {
@@ -29,10 +34,18 @@ class BFInfiniteHorizontalMovingView: UIView {
     }
     
     public var movingSpeed: TimeInterval = 4.0
+    public var delegate: BFInfiniteHorizontalMovingViewDelegate?
+    
+    override var backgroundColor: UIColor? {
+        didSet {
+            backupBackgroundColor = backgroundColor
+        }
+    }
     
     fileprivate var backgroundImageView1: UIView!
     fileprivate var backgroundImageView2: UIView!
     
+    private var backupBackgroundColor: UIColor!
     
     static public func newInstance(patternImage: UIImage, frame: CGRect) -> BFInfiniteHorizontalMovingView {
         let newView = BFInfiniteHorizontalMovingView(frame: frame)
@@ -66,10 +79,24 @@ class BFInfiniteHorizontalMovingView: UIView {
         
         adjustSubviewsPosition()
         self.clipsToBounds = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(viewDidTapped(gesture:)))
+        self.addGestureRecognizer(tap)
     }
     
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
+    }
+    
+    @objc
+    private func viewDidTapped(gesture: UITapGestureRecognizer) {
+        if gesture.state == .began {
+            self.backgroundColor = backupBackgroundColor.lighter()
+        }
+        else if gesture.state == .ended {
+            self.backgroundColor = backupBackgroundColor
+            delegate?.didTapped?(view: self)
+        }
     }
 }
 
@@ -88,5 +115,29 @@ extension BFInfiniteHorizontalMovingView {
         backgroundImageView1.layer.removeAllAnimations()
         backgroundImageView2.layer.removeAllAnimations()
         adjustSubviewsPosition()
+    }
+}
+
+
+extension UIColor {
+    
+    func lighter(by percentage:CGFloat=30.0) -> UIColor? {
+        return self.adjust(by: abs(percentage) )
+    }
+    
+    func darker(by percentage:CGFloat=30.0) -> UIColor? {
+        return self.adjust(by: -1 * abs(percentage) )
+    }
+    
+    func adjust(by percentage:CGFloat=30.0) -> UIColor? {
+        var r:CGFloat=0, g:CGFloat=0, b:CGFloat=0, a:CGFloat=0;
+        if(self.getRed(&r, green: &g, blue: &b, alpha: &a)){
+            return UIColor(red: min(r + percentage/100, 1.0),
+                           green: min(g + percentage/100, 1.0),
+                           blue: min(b + percentage/100, 1.0),
+                           alpha: a)
+        }else{
+            return nil
+        }
     }
 }

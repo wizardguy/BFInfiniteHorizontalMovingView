@@ -16,21 +16,24 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, BFInfiniteHorizontalMovingViewDelegate {
     
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var bar: BFInfiniteHorizontalMovingView!
     @IBOutlet weak var switcher: UISwitch!
+    @IBOutlet weak var label: UILabel!
     
     var secondView: BFInfiniteHorizontalMovingView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        label.text = ""
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         secondView = BFInfiniteHorizontalMovingView.newInstance(patternImage: UIImage(named: "1.jpg")!, frame: containerView.bounds)
+        secondView.delegate = self
         containerView.addSubview(secondView)
     }
     
@@ -48,5 +51,11 @@ class ViewController: UIViewController {
             bar.stopMoving()
             secondView.stopMoving()
         }
+    }
+}
+
+extension ViewController {
+    func didTapped(view: BFInfiniteHorizontalMovingView) {
+        label.text = "View did Tapped!"
     }
 }
