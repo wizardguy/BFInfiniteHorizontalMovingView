@@ -22,6 +22,7 @@ class ViewController: UIViewController, BFInfiniteHorizontalMovingViewDelegate {
     @IBOutlet weak var bar: BFInfiniteHorizontalMovingView!
     @IBOutlet weak var switcher: UISwitch!
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var progressButton: BFProgressButton!
     
     var secondView: BFInfiniteHorizontalMovingView!
     
@@ -32,14 +33,25 @@ class ViewController: UIViewController, BFInfiniteHorizontalMovingViewDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        secondView = BFInfiniteHorizontalMovingView.newInstance(patternImage: UIImage(named: "1.jpg")!, frame: containerView.bounds)
-        secondView.delegate = self
-        containerView.addSubview(secondView)
+        if secondView == nil {
+            secondView = BFInfiniteHorizontalMovingView.newInstance(patternImage: UIImage(named: "background")!, frame: containerView.bounds, backColor: #colorLiteral(red: 0, green: 0.7058823529, blue: 1, alpha: 1))
+            secondView.delegate = self
+            containerView.addSubview(secondView)
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func buttonClick(_ sender: Any) {
+        if progressButton.progressState == .stopped {
+            progressButton.startMoving()
+        }
+        else {
+            progressButton.stopMoving()
+        }
     }
     
     @IBAction func switchChaged(_ sender: Any) {

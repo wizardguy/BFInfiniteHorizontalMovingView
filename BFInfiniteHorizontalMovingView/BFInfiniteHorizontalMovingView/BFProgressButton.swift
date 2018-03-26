@@ -1,22 +1,22 @@
 //
-//  BFInfiniteHorizontalMovingView.swift
-//  animationTest
+//  BFProgressButton.swift
+//  BFInfiniteHorizontalMovingView
 //
-//  Created by Dennis on 25/3/2018.
-//  Copyright © 2018 Dennis. All rights reserved.
+//  Created by Dennis on 2018/3/26.
+//  Copyright © 2018年 Dennis. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-@objc
-protocol BFInfiniteHorizontalMovingViewDelegate {
-    @objc optional func didTapped(view: BFInfiniteHorizontalMovingView)
+enum BFProgressState {
+    case moving
+    case stopped
 }
 
 
 @IBDesignable
-class BFInfiniteHorizontalMovingView: UIView {
+class BFProgressButton: UIButton {
     
     @IBInspectable
     public var backgroundPatternImage:UIImage? {
@@ -34,19 +34,20 @@ class BFInfiniteHorizontalMovingView: UIView {
     }
     
     public var movingSpeed: TimeInterval = 4.0
-    public var delegate: BFInfiniteHorizontalMovingViewDelegate?
-   
+    public var progressState: BFProgressState {
+        get {
+            return _progressState
+        }
+    }
+    
+    fileprivate var _progressState: BFProgressState = .stopped
     fileprivate var backgroundImageView1: UIView!
     fileprivate var backgroundImageView2: UIView!
     
-    private var backupBackgroundColor: UIColor!
-    
-    static public func newInstance(patternImage: UIImage, frame: CGRect, backColor: UIColor? = UIColor.clear) -> BFInfiniteHorizontalMovingView {
-        let newView = BFInfiniteHorizontalMovingView(frame: frame)
-        newView.backgroundPatternImage = patternImage
-        newView.backgroundColor = backColor
-        newView.backupBackgroundColor = backColor
-        return newView
+    static public func newInstance(patternImage: UIImage, frame: CGRect) -> BFProgressButton {
+        let newButton = BFProgressButton(frame: frame)
+        newButton.backgroundPatternImage = patternImage
+        return newButton
     }
     
     internal override init(frame: CGRect) {
@@ -59,47 +60,44 @@ class BFInfiniteHorizontalMovingView: UIView {
         setup()
     }
     
-    fileprivate func adjustSubviewsPosition() {
+    fileprivate func adjustSubViewsPosition() {
         backgroundImageView1.frame = self.bounds
         backgroundImageView2.frame = CGRect(x:self.bounds.size.width, y: 0, width: self.bounds.size.width, height: self.bounds.height)
     }
     
+    fileprivate func showMovingViews(_ show:Bool) {
+        backgroundImageView1.isHidden = !show
+        backgroundImageView2.isHidden = !show
+    }
+    
+    
     private func setup() {
         // UIImageView 1
         backgroundImageView1 = UIView()
+        backgroundImageView1.isUserInteractionEnabled = false
         self.addSubview(backgroundImageView1!)
         
         // UIImageView 2
         backgroundImageView2 = UIView()
+        backgroundImageView2.isUserInteractionEnabled = false
         self.addSubview(backgroundImageView2!)
         
-        adjustSubviewsPosition()
+        adjustSubViewsPosition()
         self.clipsToBounds = true
         
-        let tap = UILongPressGestureRecognizer(target: self, action: #selector(viewDidTapped(gesture:)))
-        tap.minimumPressDuration = 0.1
-        self.addGestureRecognizer(tap)
+        showMovingViews(false)
     }
     
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
     }
-    
-    @objc
-    private func viewDidTapped(gesture: UITapGestureRecognizer) {
-        if gesture.state == .began {
-            self.backgroundColor = backupBackgroundColor.lighter()
-        }
-        else if gesture.state == .ended {
-            self.backgroundColor = backupBackgroundColor
-            delegate?.didTapped?(view: self)
-        }
-    }
 }
 
 
-extension BFInfiniteHorizontalMovingView {
+extension BFProgressButton {
     func startMoving() {
+        _progressState = .moving
+        showMovingViews(true)
         let animationOptions = UIViewAnimationOptions.repeat.rawValue | UIViewAnimationOptions.curveLinear.rawValue
         // Animate background
         UIView.animate(withDuration: movingSpeed, delay: 0.0, options: UIViewAnimationOptions(rawValue: animationOptions), animations: {
@@ -109,32 +107,11 @@ extension BFInfiniteHorizontalMovingView {
     }
     
     func stopMoving() {
+        _progressState = .stopped
         backgroundImageView1.layer.removeAllAnimations()
         backgroundImageView2.layer.removeAllAnimations()
-        adjustSubviewsPosition()
+        adjustSubViewsPosition()
+        showMovingViews(false)
     }
 }
 
-
-extension UIColor {
-    
-    func lighter(by percentage:CGFloat=30.0) -> UIColor? {
-        return self.adjust(by: abs(percentage) )
-    }
-    
-    func darker(by percentage:CGFloat=30.0) -> UIColor? {
-        return self.adjust(by: -1 * abs(percentage) )
-    }
-    
-    func adjust(by percentage:CGFloat=30.0) -> UIColor? {
-        var r:CGFloat=0, g:CGFloat=0, b:CGFloat=0, a:CGFloat=0;
-        if(self.getRed(&r, green: &g, blue: &b, alpha: &a)){
-            return UIColor(red: min(r + percentage/100, 1.0),
-                           green: min(g + percentage/100, 1.0),
-                           blue: min(b + percentage/100, 1.0),
-                           alpha: a)
-        }else{
-            return nil
-        }
-    }
-}

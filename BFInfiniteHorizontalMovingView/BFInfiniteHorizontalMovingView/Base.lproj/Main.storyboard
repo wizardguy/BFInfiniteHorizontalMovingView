@@ -58,6 +58,23 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vuC-az-k8b" customClass="BFProgressButton" customModule="BFInfiniteHorizontalMovingView" customModuleProvider="target">
+                                <rect key="frame" x="18" y="206" width="340" height="34"/>
+                                <color key="backgroundColor" red="0.64665597540243114" green="0.84597946924002509" blue="0.99799174070358276" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="340" id="EoE-zh-OZn"/>
+                                    <constraint firstAttribute="height" constant="34" id="d4m-at-zQp"/>
+                                </constraints>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="backgroundPatternImage" value="background"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="buttonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fK4-uK-KMl"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -72,13 +89,16 @@
                             <constraint firstItem="Hsj-3n-mn3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="fqH-je-6Pr"/>
                             <constraint firstItem="gPG-Ah-pzM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gyt-sd-zC2"/>
                             <constraint firstItem="gVa-gg-FNf" firstAttribute="top" secondItem="gPG-Ah-pzM" secondAttribute="bottom" constant="26" id="hUy-mW-SZc"/>
+                            <constraint firstItem="Hsj-3n-mn3" firstAttribute="top" secondItem="vuC-az-k8b" secondAttribute="bottom" constant="8" id="itx-bH-v1N"/>
                             <constraint firstItem="8Nc-NO-jbH" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="vKh-fe-3vI"/>
+                            <constraint firstItem="vuC-az-k8b" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yCc-vt-hzY"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="bar" destination="8Nc-NO-jbH" id="6Sk-Ng-fvk"/>
                         <outlet property="containerView" destination="Hsj-3n-mn3" id="eiY-58-KKH"/>
                         <outlet property="label" destination="gVa-gg-FNf" id="EBe-Gl-z0R"/>
+                        <outlet property="progressButton" destination="vuC-az-k8b" id="pls-P9-Xq2"/>
                         <outlet property="switcher" destination="gPG-Ah-pzM" id="VH9-V2-ZZJ"/>
                     </connections>
                 </viewController>
@@ -89,5 +109,6 @@
     </scenes>
     <resources>
         <image name="1.jpg" width="550" height="294"/>
+        <image name="background" width="34" height="34"/>
     </resources>
 </document>
