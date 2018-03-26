@@ -2,9 +2,14 @@
 
 A view which can scroll infinitely in horizontal direction. This view is desgined for the progress bar. Also it can be reused in any case which need a infinite animation.
 
-![BFInfiniteHorizontalMovingView.gif](https://github.com/wizardguy/screenshots/raw/master/BFInfiniteHorizontalMovingView.gif)
+![BFProgress.gif](https://github.com/wizardguy/screenshots/raw/master/BFProgress.gif)
 
-### How To Use
+# BFProgressButton
+
+Basically same as BFInfiniteHorizontalMovingView, while it is a button.
+
+
+# How To Use
 
 1) copy the BFInfiniteHorizontalMovingView into your project
 2) Add your own background image resource
